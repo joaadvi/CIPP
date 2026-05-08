@@ -279,6 +279,11 @@ export const nativeMenuItems = [
             path: '/tenant/reports/graph-office-reports',
             permissions: ['Tenant.Reports.*'],
           },
+          {
+            title: 'Secure Score Report',
+            path: '/tenant/reports/secure-score-report',
+            permissions: ['Tenant.Administration.*'],
+          },
         ],
       },
       {
