@@ -914,7 +914,7 @@
         }
       },
       {
-        "type": "input",
+        "type": "textField",
         "name": "standards.NudgeMFA.excludeGroupName",
         "label": "Exclude group display name (e.g. CIPP-JIT-MFA-Exclude)"
       },
