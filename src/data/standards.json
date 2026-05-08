@@ -893,6 +893,16 @@
           "min": { "value": 0, "message": "Minimum value is 0" },
           "max": { "value": 14, "message": "Maximum value is 14" }
         }
+      },
+      {
+        "type": "input",
+        "name": "standards.NudgeMFA.excludeGroupName",
+        "label": "Exclude group display name (e.g. CIPP-JIT-MFA-Exclude)"
+      },
+      {
+        "type": "switch",
+        "name": "standards.NudgeMFA.CreateGroups",
+        "label": "Create exclude group if it does not exist"
       }
     ],
     "label": "Sets the state for the request to setup Authenticator",

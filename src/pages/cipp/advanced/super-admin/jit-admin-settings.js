@@ -16,6 +16,7 @@ const Page = () => {
     mode: "onChange",
     defaultValues: {
       MaxDuration: "",
+      MfaExcludeGroupName: "",
     },
   });
 
@@ -28,6 +29,7 @@ const Page = () => {
     if (jitSettings.isSuccess && jitSettings.data) {
       formControl.reset({
         MaxDuration: jitSettings.data?.MaxDuration || [],
+        MfaExcludeGroupName: jitSettings.data?.MfaExcludeGroupName || "",
       });
     }
   }, [jitSettings.isSuccess, jitSettings.data]);
@@ -44,6 +46,7 @@ const Page = () => {
       customDataformatter={(values) => ({
         Action: "Set",
         MaxDuration: values.MaxDuration || null,
+        MfaExcludeGroupName: values.MfaExcludeGroupName || null,
       })}
     >
       <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -99,6 +102,25 @@ const Page = () => {
             }}
             formControl={formControl}
             helperText="ISO 8601 format: PT1H (1 hour), P1D (1 day), P7D (1 week), P28D (4 weeks). Leave empty for no limit."
+          />
+        </Grid>
+
+        <Grid size={{ md: 12, xs: 12 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2, mb: 1 }}>
+            MFA Registration Campaign Exclude Group
+          </Typography>
+          <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+            When configured, JIT Admin will automatically add activated users to this group. Use
+            together with the NudgeMFA standard&apos;s exclude group setting to prevent MFA
+            registration prompts for temporary JIT admin accounts.
+          </Typography>
+          <CippFormComponent
+            type="textField"
+            name="MfaExcludeGroupName"
+            label="MFA Exclude Group Name"
+            placeholder="e.g. CIPP-JIT-MFA-Exclude"
+            formControl={formControl}
+            helperText="Display name of the security group. Must match the exclude group name configured in the NudgeMFA standard. Leave empty to disable."
           />
         </Grid>
 
