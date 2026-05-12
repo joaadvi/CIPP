@@ -301,6 +301,38 @@ const Page = () => {
 
             <Grid size={{ xs: 12 }}>
               <Divider sx={{ my: 2 }} />
+              <Typography variant="h6">MFA Registration Campaign Exclude</Typography>
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <CippFormComponent
+                type="switch"
+                label="Exclude JIT user from MFA Registration Campaign"
+                name="mfaExcludeEnabled"
+                formControl={formControl}
+              />
+            </Grid>
+            <CippFormCondition
+              formControl={formControl}
+              field="mfaExcludeEnabled"
+              compareType="is"
+              compareValue={true}
+            >
+              <Grid size={{ xs: 12 }}>
+                <CippFormComponent
+                  type="textField"
+                  fullWidth
+                  label="MFA Exclude Group Name"
+                  name="mfaExcludeGroupName"
+                  placeholder="Security group name (will be created if it doesn't exist)"
+                  formControl={formControl}
+                  required={true}
+                  validators={{ required: "Group name is required when MFA exclude is enabled" }}
+                />
+              </Grid>
+            </CippFormCondition>
+
+            <Grid size={{ xs: 12 }}>
+              <Divider sx={{ my: 2 }} />
               <Typography variant="h6">User Creation Settings</Typography>
             </Grid>
 

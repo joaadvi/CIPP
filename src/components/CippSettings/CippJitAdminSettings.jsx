@@ -22,7 +22,6 @@ const CippJitAdminSettings = () => {
     mode: "onChange",
     defaultValues: {
       MaxDuration: "",
-      MfaExcludeGroupName: "",
     },
   });
 
@@ -30,7 +29,6 @@ const CippJitAdminSettings = () => {
     if (jitSettings.isSuccess && jitSettings.data) {
       formControl.reset({
         MaxDuration: jitSettings.data?.MaxDuration || "",
-        MfaExcludeGroupName: jitSettings.data?.MfaExcludeGroupName || "",
       });
     }
   }, [jitSettings.isSuccess, jitSettings.data]);
@@ -42,7 +40,6 @@ const CippJitAdminSettings = () => {
       data: {
         Action: "Set",
         MaxDuration: formData.MaxDuration || null,
-        MfaExcludeGroupName: formData.MfaExcludeGroupName || null,
       },
       queryKey: "jitAdminSettingsPost",
     });
@@ -113,25 +110,10 @@ const CippJitAdminSettings = () => {
           />
         </Box>
 
-        {/* MFA Exclude Group Section */}
-        <Box>
-          <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: "bold" }}>
-            MFA Registration Campaign Exclude Group
-          </Typography>
-          <CippFormComponent
-            type="textField"
-            name="MfaExcludeGroupName"
-            label="MFA Exclude Group Name"
-            placeholder="e.g. CIPP-JIT-MFA-Exclude"
-            formControl={formControl}
-          />
-        </Box>
-
         <Alert severity="info">
           <Typography variant="body2">
-            Leave empty for no limit on JIT admin account duration. When the MFA exclude group is
-            configured, JIT admin users will be automatically added to this group during activation
-            and removed on expiration. Use together with the NudgeMFA standard.
+            Leave empty for no limit on JIT admin account duration. MFA Registration Campaign
+            exclusion is configured per JIT Admin Template.
           </Typography>
         </Alert>
 

@@ -210,6 +210,10 @@ const Page = () => {
       formControl.setValue("usageLocation", template.defaultUsageLocation, { shouldDirty: true });
     }
 
+    // MFA exclude group
+    formControl.setValue("mfaExcludeEnabled", template.mfaExcludeEnabled ?? false, { shouldDirty: true });
+    formControl.setValue("mfaExcludeGroupName", template.mfaExcludeGroupName || "", { shouldDirty: true });
+
     // Dates
     if (template.defaultDuration) {
       const duration =
@@ -556,6 +560,8 @@ const Page = () => {
                 formControl={formControl}
               />
             </Grid>
+            <CippFormComponent type="hidden" name="mfaExcludeEnabled" formControl={formControl} />
+            <CippFormComponent type="hidden" name="mfaExcludeGroupName" formControl={formControl} />
           </Grid>
         </Box>
       </CippFormPage>
