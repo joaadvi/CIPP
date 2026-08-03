@@ -124,7 +124,7 @@ export const nativeMenuItems = [
             permissions: ['Identity.User.*'],
           },
           {
-            title: 'AAD Connect Report',
+            title: 'Microsoft Entra Connect Report',
             path: '/identity/reports/azure-ad-connect-report',
             permissions: ['Identity.User.*'],
           },
@@ -290,6 +290,11 @@ export const nativeMenuItems = [
             path: '/tenant/reports/secure-score-report',
             permissions: ['Tenant.Administration.*'],
           },
+          {
+            title: 'Custom Test Report',
+            path: '/tenant/reports/custom-test-report',
+            permissions: ['Tenant.Reports.*'],
+          },
         ],
       },
       {
@@ -363,6 +368,11 @@ export const nativeMenuItems = [
             path: '/security/defender/list-defender-tvm',
             permissions: ['Security.Alert.*'],
           },
+          {
+            title: 'CVE Management',
+            path: '/security/defender/defender-cve-exceptions',
+            permissions: ['Security.Alert.*'],
+          },
         ],
       },
       {
@@ -377,6 +387,11 @@ export const nativeMenuItems = [
           {
             title: 'MDE Onboarding',
             path: '/security/reports/mde-onboarding',
+            permissions: ['Security.Defender.*'],
+          },
+          {
+            title: 'Vulnerability Report',
+            path: '/security/reports/cve-report',
             permissions: ['Security.Defender.*'],
           },
         ],
@@ -543,6 +558,7 @@ export const nativeMenuItems = [
             title: 'Application Templates',
             path: '/endpoint/applications/templates',
             permissions: ['Endpoint.Application.*'],
+            scope: 'global',
           },
         ],
       },
@@ -574,7 +590,7 @@ export const nativeMenuItems = [
       },
       {
         title: 'Device Management',
-        permissions: ['Endpoint.MEM.*'],
+        permissions: ['Endpoint.MEM.*', 'Endpoint.Device.*'],
         items: [
           {
             title: 'Devices',
@@ -686,6 +702,31 @@ export const nativeMenuItems = [
         permissions: ['Sharepoint.Admin.*'],
       },
       {
+        title: 'SharePoint Templates',
+        path: '/teams-share/sharepoint-templates',
+        permissions: ['Sharepoint.Admin.*'],
+      },
+      {
+        title: 'Deleted Sites',
+        path: '/teams-share/deleted-sites',
+        permissions: ['Sharepoint.Admin.*'],
+      },
+      {
+        title: 'Sharing Report',
+        path: '/teams-share/sharing-report',
+        permissions: ['Sharepoint.Site.*'],
+      },
+      {
+        title: 'Permissions Report',
+        path: '/teams-share/permissions-report',
+        permissions: ['Sharepoint.Site.*'],
+      },
+      {
+        title: 'External Users',
+        path: '/teams-share/external-users',
+        permissions: ['Sharepoint.Site.*'],
+      },
+      {
         title: 'Teams',
         permissions: ['Teams.Group.*'],
         items: [
@@ -795,7 +836,7 @@ export const nativeMenuItems = [
       },
       {
         title: 'Transport',
-        permissions: ['Exchange.TransportRule.*'],
+        permissions: ['Exchange.TransportRule.*', 'Exchange.Connector.*'],
         items: [
           {
             title: 'Transport rules',
@@ -823,7 +864,7 @@ export const nativeMenuItems = [
       },
       {
         title: 'Spamfilter',
-        permissions: ['Exchange.SpamFilter.*'],
+        permissions: ['Exchange.SpamFilter.*', 'Exchange.ConnectionFilter.*'],
         items: [
           {
             title: 'Spamfilter',
@@ -856,7 +897,7 @@ export const nativeMenuItems = [
       },
       {
         title: 'Resource Management',
-        permissions: ['Exchange.Equipment.*'],
+        permissions: ['Exchange.Equipment.*', 'Exchange.Room.*'],
         items: [
           {
             title: 'Equipment',
