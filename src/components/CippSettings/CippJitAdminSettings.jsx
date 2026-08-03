@@ -112,8 +112,10 @@ const CippJitAdminSettings = () => {
 
         <Alert severity="info">
           <Typography variant="body2">
-            Leave empty for no limit on JIT admin account duration. MFA Registration Campaign
-            exclusion is configured per JIT Admin Template.
+            Leave empty for no limit on JIT admin account duration. When set, technicians cannot
+            create JIT admin accounts with durations exceeding this limit. This setting applies
+            globally to all tenants. MFA Registration Campaign exclusion is configured per JIT
+            Admin Template.
           </Typography>
         </Alert>
 
