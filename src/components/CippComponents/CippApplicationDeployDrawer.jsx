@@ -378,7 +378,7 @@ export const CippApplicationDeployDrawer = ({
             </CippFormCondition>
 
             {/* Assign To Options */}
-            <Grid size={{ xs: 12 }}>
+            <Grid size={{ xs: 12, md: 5 }}>
               <CippFormComponent
                 type="radio"
                 name="AssignTo"
@@ -399,7 +399,7 @@ export const CippApplicationDeployDrawer = ({
               compareType="is"
               compareValue="customGroup"
             >
-              <Grid size={{ xs: 12 }}>
+              <Grid size={{ xs: 12, md: 5 }}>
                 <CippFormComponent
                   type="textField"
                   label="Custom Group Names separated by comma. Wildcards (*) are allowed"
@@ -441,7 +441,7 @@ export const CippApplicationDeployDrawer = ({
                 formControl={formControl}
               />
             </Grid>
-            <Grid size={{ xs: 5 }}>
+            <Grid size={{ xs: 12 }}>
               <Button
                 onClick={() => {
                   searchApp(formControl.getValues('searchQuery'), 'StoreApp')
@@ -579,7 +579,7 @@ export const CippApplicationDeployDrawer = ({
                 formControl={formControl}
               />
             </Grid>
-            <Grid size={{ xs: 5 }}>
+            <Grid size={{ xs: 12 }}>
               <Button
                 onClick={() => {
                   searchApp(formControl.getValues('searchQuery'), 'choco')
