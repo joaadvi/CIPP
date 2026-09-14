@@ -1,37 +1,62 @@
 name: Azure Static Web Apps CI/CD
 
+# Advi prod deploy for cipp.advicsp.no (SWA cipp-swa-axonk).
+# We build the frontend ourselves and let the SWA action only upload (skip_app_build).
+# Reason (2026-09-14): upstream sets engines.node to versions Oryx does not ship yet
+# (e.g. ^22.22.2 while Oryx tops out at 22.22.0), which fails the build with
+# "Platform 'nodejs' version '^22.22.2' is unsupported". Mirrors the upstream
+# cipp_frontend_build.yml recipe: node version derived from package.json engines.
+
 on:
   push:
     branches:
       - main
-  #pull_request:
-  #  types: [opened, synchronize, reopened, closed]
-  #  branches:
-  #    - main
+  workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
-      - name: Build And Deploy
+
+      - name: Get Node version from package.json engines
+        id: node
+        run: |
+          raw=$(node -p "require('./package.json').engines.node")
+          echo "version=$(echo "$raw" | sed -E 's/[^0-9.]+//g')" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node.outputs.version }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: npm run build
+
+      - name: Stamp version.json and copy SWA config
+        run: |
+          VERSION=$(jq -r '.version' public/version.json)
+          echo "{\"version\": \"${VERSION}\", \"commit\": \"${GITHUB_SHA::7}\"}" > out/version.json
+          cp staticwebapp.config.json out/
+
+      - name: Deploy (upload only)
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_STONE_014D64A03 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "/out" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "out"
+          api_location: ""
+          output_location: ""
+          skip_app_build: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -44,4 +69,3 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_STONE_014D64A03 }}
           action: "close"
-
